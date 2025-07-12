@@ -12,74 +12,54 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext banana) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const RadioButtonExample(),
+      home: const SliderExample(),
     );
   }
 }
 
-class RadioButtonExample extends StatefulWidget {
-  const RadioButtonExample({super.key});
+class SliderExample extends StatefulWidget {
+  const SliderExample({super.key});
 
   @override
-  State<RadioButtonExample> createState() => _RadioButtonExampleState();
+  State<SliderExample> createState() => _SliderExampleState();
 }
 
-class _RadioButtonExampleState extends State<RadioButtonExample> {
-  String selectedOption = 'Option1';
+class _SliderExampleState extends State<SliderExample> {
+  double _sliderValue = 50.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Radion Button Example"),
-        backgroundColor: Colors.blue,
+        title: const Text('Slider Example'),
+        backgroundColor: Colors.orange,
       ),
-
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text('Choose an option:', style: TextStyle(fontSize: 18)),
-          ),
-
-          RadioListTile<String>(
-            title: const Text('Option 1'),
-            value: 'Option 1',
-            groupValue: 'selectedOption',
-            onChanged: (value) {
-              setState(() {
-                selectedOption = value!;
-              });
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Option 2'),
-            value: 'Option 2',
-            groupValue: 'selectedOption',
-            onChanged: (value) {
-              setState(() {
-                selectedOption = value!;
-              });
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Option 3'),
-            value: 'Option 3',
-            groupValue: 'selectedOption',
-            onChanged: (value) {
-              setState(() {
-                selectedOption = value!;
-              });
-            },
-          ),
-          const SizedBox(height: 20,),
-          Center(
-            child: Text(
-              'Selected: $selectedOption',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const Text('Adjust the value:', style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 30),
+            // Slider
+            Slider(
+              value: _sliderValue,
+              min: 0.0,
+              max: 100.0,
+              divisions: 10,
+              label: _sliderValue.toStringAsFixed(1),
+              onChanged: (value) {
+                setState(() {
+                  _sliderValue = value;
+                });
+              },
             ),
-          )
-        ],
+            const SizedBox(height: 20,),
+            Text(
+              'Value: ${_sliderValue.toStringAsFixed(1)}',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
       ),
     );
   }
