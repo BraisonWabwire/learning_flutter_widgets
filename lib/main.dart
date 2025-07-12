@@ -45,7 +45,7 @@ class _RadioButtonExampleState extends State<RadioButtonExample> {
           RadioListTile<String>(
             title: const Text('Option 1'),
             value: 'Option 1',
-            groupValue: 'slectedOption',
+            groupValue: 'selectedOption',
             onChanged: (value) {
               setState(() {
                 selectedOption = value!;
@@ -55,7 +55,7 @@ class _RadioButtonExampleState extends State<RadioButtonExample> {
           RadioListTile<String>(
             title: const Text('Option 2'),
             value: 'Option 2',
-            groupValue: 'slectedOption',
+            groupValue: 'selectedOption',
             onChanged: (value) {
               setState(() {
                 selectedOption = value!;
@@ -65,7 +65,7 @@ class _RadioButtonExampleState extends State<RadioButtonExample> {
           RadioListTile<String>(
             title: const Text('Option 3'),
             value: 'Option 3',
-            groupValue: 'slectedOption',
+            groupValue: 'selectedOption',
             onChanged: (value) {
               setState(() {
                 selectedOption = value!;
