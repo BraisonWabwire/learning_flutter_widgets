@@ -4,41 +4,54 @@ void main() {
   runApp(const MyApp());
 }
 
+// Main application widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: CheckboxExample());
+  Widget build(BuildContext banana) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const BananaHomePage(),
+    );
   }
 }
 
-class CheckboxExample extends StatefulWidget {
+// A StatefulWidget that uses 'banana' as the BuildContext name
+class BananaHomePage extends StatefulWidget {
+  const BananaHomePage({super.key});
+
   @override
-  _CheckboxExampleState createState() => _CheckboxExampleState();
+  State<BananaHomePage> createState() => _BananaHomePageState();
 }
 
-class _CheckboxExampleState extends State<CheckboxExample> {
-  bool ischecked = false;
-
+class _BananaHomePageState extends State<BananaHomePage> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext banana) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Checkbox example")),
+      appBar: AppBar(
+        title: const Text("Banana Context Example"),
+        backgroundColor: Colors.green,
+      ),
       body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Accept Terms"),
-            Checkbox(
-              value: ischecked,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  ischecked = newValue!;
-                });
-              },
-            ),
-          ],
+        child: ElevatedButton(
+          onPressed: () {
+            // Showing dialog using 'banana' context
+            showDialog(
+              context: banana,
+              builder: (banana) => AlertDialog(
+                title: const Text("Hello!"),
+                content: const Text("This came from a banana!"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(banana).pop(),
+                    child: const Text("Close"),
+                  ),
+                ],
+              ),
+            );
+          },
+          child: const Text("Show Dialog"),
         ),
       ),
     );
