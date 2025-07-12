@@ -12,47 +12,74 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext banana) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const BananaHomePage(),
+      home: const RadioButtonExample(),
     );
   }
 }
 
-// A StatefulWidget that uses 'banana' as the BuildContext name
-class BananaHomePage extends StatefulWidget {
-  const BananaHomePage({super.key});
+class RadioButtonExample extends StatefulWidget {
+  const RadioButtonExample({super.key});
 
   @override
-  State<BananaHomePage> createState() => _BananaHomePageState();
+  State<RadioButtonExample> createState() => _RadioButtonExampleState();
 }
 
-class _BananaHomePageState extends State<BananaHomePage> {
+class _RadioButtonExampleState extends State<RadioButtonExample> {
+  String selectedOption = 'Option1';
   @override
-  Widget build(BuildContext banana) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Banana Context Example"),
-        backgroundColor: Colors.green,
+        title: Text("Radion Button Example"),
+        backgroundColor: Colors.blue,
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Showing dialog using 'banana' context
-            showDialog(
-              context: banana,
-              builder: (banana) => AlertDialog(
-                title: const Text("Hello!"),
-                content: const Text("This came from a banana!"),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(banana).pop(),
-                    child: const Text("Close"),
-                  ),
-                ],
-              ),
-            );
-          },
-          child: const Text("Show Dialog"),
-        ),
+
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text('Choose an option:', style: TextStyle(fontSize: 18)),
+          ),
+
+          RadioListTile<String>(
+            title: const Text('Option 1'),
+            value: 'Option 1',
+            groupValue: 'slectedOption',
+            onChanged: (value) {
+              setState(() {
+                selectedOption = value!;
+              });
+            },
+          ),
+          RadioListTile<String>(
+            title: const Text('Option 2'),
+            value: 'Option 2',
+            groupValue: 'slectedOption',
+            onChanged: (value) {
+              setState(() {
+                selectedOption = value!;
+              });
+            },
+          ),
+          RadioListTile<String>(
+            title: const Text('Option 3'),
+            value: 'Option 3',
+            groupValue: 'slectedOption',
+            onChanged: (value) {
+              setState(() {
+                selectedOption = value!;
+              });
+            },
+          ),
+          const SizedBox(height: 20,),
+          Center(
+            child: Text(
+              'Selected: $selectedOption',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
       ),
     );
   }
