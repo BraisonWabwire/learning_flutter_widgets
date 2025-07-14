@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,50 +10,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dismissible Example',
+      title: 'Long Press Delete Example',
       home: Scaffold(
-        appBar: AppBar(title: Text("Dismissible Example")),
-        body: const Center(child: MyDismissibleItem()),
+        appBar: AppBar(
+          title: const Text('Long Press to Delete'),
+        ),
+        body: const NameList(),
       ),
     );
   }
 }
 
-class MyDismissibleItem extends StatefulWidget {
-  const MyDismissibleItem({super.key});
+class NameList extends StatefulWidget {
+  const NameList({super.key});
 
   @override
-  State<MyDismissibleItem> createState() => _MyDismissibleItemState();
+  State<NameList> createState() => _NameListState();
 }
 
-class _MyDismissibleItemState extends State<MyDismissibleItem> {
-  bool _isItemVisible = true;
+class _NameListState extends State<NameList> {
+  List<String> names = ['Braison', 'Alice', 'John', 'Mary', 'Steve'];
+
+  void deleteName(int index) {
+    String deletedName = names[index];
+    setState(() {
+      names.removeAt(index);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$deletedName deleted')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _isItemVisible ? Dismissible(
-      key: const Key('unique key'),
-      direction: DismissDirection.endToStart,
-      onDismissed: (direction){
-        setState(() {
-          _isItemVisible=false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Item dismissed")),
+    return ListView.builder(
+      itemCount: names.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onLongPress: () => deleteName(index),
+          child: Card(
+            child: ListTile(
+              title: Text(names[index]),
+              subtitle: const Text('Long press to delete'),
+            ),
+          ),
         );
       },
-      background: Container(
-        color: Colors.red,
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const Icon(Icons.delete, color: Colors.white,),
-      ),
-      
-       child: Card(
-        child: ListTile(
-          title: const Text('Swipe left to delete'),
-        ),
-       ),
-        )
-       :const Text("Item was dismissed");
+    );
   }
 }
