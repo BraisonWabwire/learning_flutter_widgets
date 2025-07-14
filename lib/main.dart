@@ -10,54 +10,74 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'drop down ',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: DropDownExample(),
+      debugShowCheckedModeBanner: false,
+      title: 'Form Widget',
+      home: const FormPage(),
     );
   }
 }
 
-class DropDownExample extends StatefulWidget {
-  const DropDownExample({super.key});
+class FormPage extends StatefulWidget {
+  const FormPage({super.key});
 
   @override
-  State<DropDownExample> createState() => _DropDownExampleState();
+  State<FormPage> createState() => _FormPageState();
 }
 
-class _DropDownExampleState extends State<DropDownExample> {
-  final List<String> fruits = ['Apple', 'Banana', 'Mango', 'Orange'];
+class _FormPageState extends State<FormPage> {
+  final _formKey = GlobalKey<FormState>();
 
-  String? selectedFruit;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Drop down button example")),
-      body: Center(
+      appBar: AppBar(title: const Text("Form Widget Example")),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+      child: Form(
+        key: _formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DropdownButton<String>(
-              items: fruits.map<DropdownMenuItem<String>>((String fruit) {
-                return DropdownMenuItem<String>(
-                  value: fruit,
-                  child: Text(fruit),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedFruit = newValue;
-                });
+            TextFormField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: 'name'),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Please enter your name';
+                }
+                return null;
               },
             ),
-            const SizedBox(height: 20),
-            Text(
-              selectedFruit == null
-                  ? 'no fruit selected'
-                  : 'you slected:$selectedFruit',
-              style: const TextStyle(fontSize: 18),
+            const SizedBox(height: 15),
+            TextFormField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email'
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty || !value.contains('@')) {
+                  return 'please enter a valid email';
+                }
+              },
+            ),
+            const SizedBox(height: 35),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Form submitted! Name: ${nameController.text}, Email: ${emailController.text}"),
+                      )
+                  );
+                }
+              },
+              child: const Text('Submit'),
             ),
           ],
         ),
+      ),
       ),
     );
   }
