@@ -10,80 +10,50 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Form Widget',
-      home: const FormPage(),
+      title: 'Dismissible Example',
+      home: Scaffold(
+        appBar: AppBar(title: Text("Dismissible Example")),
+        body: const Center(child: MyDismissibleItem()),
+      ),
     );
   }
 }
 
-class FormPage extends StatefulWidget {
-  const FormPage({super.key});
+class MyDismissibleItem extends StatefulWidget {
+  const MyDismissibleItem({super.key});
 
   @override
-  State<FormPage> createState() => _FormPageState();
+  State<MyDismissibleItem> createState() => _MyDismissibleItemState();
 }
 
-class _FormPageState extends State<FormPage> {
-  final _formKey = GlobalKey<FormState>();
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+class _MyDismissibleItemState extends State<MyDismissibleItem> {
+  bool _isItemVisible = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Form Widget Example")),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-      child: Form(
-        autovalidateMode: AutovalidateMode.always ,
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'name'),
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 15),
-            TextFormField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email'
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty || !value.contains('@')) {
-                  return 'please enter a valid email';
-                }
-              },
-            ),
-            const SizedBox(height: 35),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Form submitted! Name: ${nameController.text}, Email: ${emailController.text}"),
-                      )
-                  );
-                }
-              },
-              child: const Text('Submit'),
-            ),
-            FloatingActionButton(
-              child: Icon(Icons.check),
-              onPressed: (){}
-              )
-          ],
+    return _isItemVisible ? Dismissible(
+      key: const Key('unique key'),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction){
+        setState(() {
+          _isItemVisible=false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Item dismissed")),
+        );
+      },
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: const Icon(Icons.delete, color: Colors.white,),
+      ),
+      
+       child: Card(
+        child: ListTile(
+          title: const Text('Swipe left to delete'),
         ),
-      ),
-      ),
-    );
+       ),
+        )
+       :const Text("Item was dismissed");
   }
 }
