@@ -76,6 +76,10 @@ class _FormPageState extends State<FormPage> {
               },
               child: const Text('Submit'),
             ),
+            FloatingActionButton(
+              child: Icon(Icons.check),
+              onPressed: (){}
+              )
           ],
         ),
       ),
