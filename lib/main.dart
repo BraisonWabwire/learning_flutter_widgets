@@ -1,63 +1,61 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-// Main application widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext banana) {
+  Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const SliderExample(),
+      title: 'drop down ',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: DropDownExample(),
     );
   }
 }
 
-class SliderExample extends StatefulWidget {
-  const SliderExample({super.key});
+class DropDownExample extends StatefulWidget {
+  const DropDownExample({super.key});
 
   @override
-  State<SliderExample> createState() => _SliderExampleState();
+  State<DropDownExample> createState() => _DropDownExampleState();
 }
 
-class _SliderExampleState extends State<SliderExample> {
-  double _sliderValue = 50.0;
+class _DropDownExampleState extends State<DropDownExample> {
+  final List<String> fruits = ['Apple', 'Banana', 'Mango', 'Orange'];
 
+  String? selectedFruit;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Slider Example'),
-        backgroundColor: Colors.orange,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      appBar: AppBar(title: Text("Drop down button example")),
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Text('Adjust the value:', style: TextStyle(fontSize: 18)),
-            const SizedBox(height: 30),
-            // Slider
-            Slider(
-              value: _sliderValue,
-              min: 0.0,
-              max: 100.0,
-              divisions: 10,
-              label: _sliderValue.toStringAsFixed(1),
-              onChanged: (value) {
+            DropdownButton<String>(
+              items: fruits.map<DropdownMenuItem<String>>((String fruit) {
+                return DropdownMenuItem<String>(
+                  value: fruit,
+                  child: Text(fruit),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
                 setState(() {
-                  _sliderValue = value;
+                  selectedFruit = newValue;
                 });
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 20),
             Text(
-              'Value: ${_sliderValue.toStringAsFixed(1)}',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            )
+              selectedFruit == null
+                  ? 'no fruit selected'
+                  : 'you slected:$selectedFruit',
+              style: const TextStyle(fontSize: 18),
+            ),
           ],
         ),
       ),
