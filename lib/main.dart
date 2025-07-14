@@ -36,6 +36,7 @@ class _FormPageState extends State<FormPage> {
       body: Padding(
         padding: const EdgeInsets.all(20),
       child: Form(
+        autovalidateMode: AutovalidateMode.always ,
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
