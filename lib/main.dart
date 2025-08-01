@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
-        appBar: AppBar(title: Text('My App')),
+        appBar: AppBar(
+            title: Text('My App')),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
