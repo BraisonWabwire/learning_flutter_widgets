@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        body: Center(child: Text('Welcome')),
+        body: SafeArea(child: Center(child: Text('Welcome'))),
       ),
     );
   }
