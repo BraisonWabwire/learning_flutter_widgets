@@ -11,27 +11,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/',
-        debugShowCheckedModeBanner: false,
-        routes: {
-            '/': (context) => const HomeScreen(),
-            'about': (context) => const AboutScreen(),
-            'settings': (context) => const SettingsScreen(),
-        },
-        title: 'Learning Material App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          scaffoldBackgroundColor: Colors.white,
-          textTheme: TextTheme(
-            bodyMedium: TextStyle(color: Colors.black, fontSize: 16),
-            bodySmall: TextStyle(color: Colors.black54, fontSize: 14),
-          ),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.blue,
-            titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-          ),
+      initialRoute: '/',
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/about': (context) => const AboutScreen(),
+        '/settings': (context) => const SettingsScreen(),
+      },
+      title: 'Learning Material App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(color: Colors.black, fontSize: 16),
+          bodySmall: TextStyle(color: Colors.black54, fontSize: 14),
         ),
-        home: HomeScreen());
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blue,
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
+    );
   }
 }
 
@@ -41,9 +41,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
-      ),
+      appBar: AppBar(title: const Text('Home Screen')),
       body: Column(
         children: [
           const Center(
@@ -52,9 +50,12 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 24, color: Colors.black),
             ),
           ),
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/about');
-          }, child: Text('Go to About')),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/about');
+            },
+            child: Text('Go to About'),
+          ),
         ],
       ),
     );
@@ -66,7 +67,25 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: const Text('About Screen')),
+      body: Column(
+        children: [
+          const Center(
+            child: Text(
+              'This is the About Screen.',
+              style: TextStyle(fontSize: 24, color: Colors.black),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+            child: Text('Go to Settings'),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -75,6 +94,14 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: const Text('Settings Screen')),
+      body: const Center(
+        child: Text(
+          'This is the Settings Screen.',
+          style: TextStyle(fontSize: 24, color: Colors.black),
+        ),
+      ),
+    );
   }
 }
